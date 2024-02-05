@@ -7,18 +7,27 @@ import { useState } from "react";
 import { db } from "@/utils/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
 
   const [secret, setSecret] = useState("");
+  const [url , setUrl] = useState("");
 
   async function handleSubmit(e:any) {
     e.preventDefault();
     // console.log(secret);
-    const doc = await addDoc(collection(db, "secrets"), {
+    const docRef = await addDoc(collection(db, "secrets"), {
       secret: secret,
       createdAt: serverTimestamp(),
     });
+
+    //generating the unique url
+    const url = `${window.location.origin}/secret/${docRef.id}`;
+    setUrl(url);
+
+    //now empty the input field
+    setSecret("");
   };
 
   return (
@@ -45,12 +54,23 @@ export default function Home() {
                 placeholder="Your secret"
                 value={secret}
                 onChange={(e) => setSecret(e.target.value)}
-                className="w-full p-4 mb-4 bg-white rounded-xl"
+                className="w-full p-4 mb-4 bg-white dark:bg-gray-600 rounded-xl"
               />
               <Button type="submit">
                 Share
               </Button>
             </form>
+          </div>
+
+          <div>
+            {url && (
+              <Link href={url}>
+                <div className="flex flex-col items-start max-w-xl px-8 mx-auto my-16 sm:px-0">
+                  <h2 className="text-2xl font-bold">Here is your secret link:</h2>
+                  <a href={url} className="text-cyan-500 underline">{url}</a>
+                </div>
+              </Link>
+            )}
           </div>
     </div>
   );
