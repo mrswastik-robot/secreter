@@ -64,7 +64,7 @@ export default function Home() {
 
           <div>
             {url && (
-              <Link href={url}>
+              <Link href={url} target="_blank">
                 <div className="flex flex-col items-start max-w-xl px-8 mx-auto my-16 sm:px-0">
                   <h2 className="text-2xl font-bold">Here is your secret link:</h2>
                   <a href={url} className="text-cyan-500 underline">{url}</a>

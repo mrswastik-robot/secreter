@@ -44,6 +44,11 @@ const SecretPage = ({params: {secretId}}: Props) => {
         fetchSecret();
         
     }, [secretId]);
+
+    // if(!secretString)
+    // {
+    //     return <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-dashed border-current border-r-transparent align-[-0.125em] text-[#f3ff43] dark:text-black motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+    // }
     
   return (
     <div className=' text-center my-8'>
