@@ -4,14 +4,21 @@ import Image from "next/image";
 import { InfoIcon } from "lucide-react";
 import { useState } from "react";
 
+import { db } from "@/utils/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
 
   const [secret, setSecret] = useState("");
 
-  const handleSubmit = (e:any) => {
+  async function handleSubmit(e:any) {
     e.preventDefault();
-    console.log(secret);
+    // console.log(secret);
+    const doc = await addDoc(collection(db, "secrets"), {
+      secret: secret,
+      createdAt: serverTimestamp(),
+    });
   };
 
   return (
@@ -40,6 +47,9 @@ export default function Home() {
                 onChange={(e) => setSecret(e.target.value)}
                 className="w-full p-4 mb-4 bg-white rounded-xl"
               />
+              <Button type="submit">
+                Share
+              </Button>
             </form>
           </div>
     </div>
