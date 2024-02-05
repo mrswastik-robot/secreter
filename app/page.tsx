@@ -57,7 +57,7 @@ export default function Home() {
                 className="w-full p-4 mb-4 bg-white dark:bg-gray-600 rounded-xl"
               />
               <Button type="submit">
-                Share
+                Create link
               </Button>
             </form>
           </div>

@@ -4,6 +4,8 @@ import { db } from '@/utils/firebase'
 
 import React, { useEffect, useState } from 'react'
 
+import { Button } from '@/components/ui/button'
+
 
 type Props = {
     params: {
@@ -14,6 +16,7 @@ type Props = {
 const SecretPage = ({params: {secretId}}: Props) => {
 
     const [secretString, setSecretString] = useState<string | null>(null);
+    const [reveal , setReveal] = useState<boolean>(false);
 
     //now after getting the secretId, we can use it to fetch the secret from the server
     useEffect(() => {
@@ -43,20 +46,12 @@ const SecretPage = ({params: {secretId}}: Props) => {
     }, [secretId]);
     
   return (
-    <div>
-        {
-            secretString ? (
-                <h1 className="text-3xl font-bold text-center my-8">Your secret is
-                    <span className="text-cyan-500"> {secretString}</span>
-                </h1>
-            ) : (
-                <h1 className="text-3xl font-bold text-center my-8">
-                    Your secret has been 
-                    <span className=' text-red-600 text-3xl font-bold uppercase'> destroyed !</span>
-                </h1>
-            )
-        }
-        
+    <div className=' text-center my-8'>
+        {secretString ? reveal ? <p className=' text-3xl font-bold'>Secret Reveal boom <span className=' text-red-500'>:</span> <br/>
+        <span className=' text-cyan-500'> {secretString}</span>
+        </p> : <Button className=' bg-cyan-500' onClick={() => setReveal(true)}>Reveal the secret</Button>
+         : 
+         <p>Your secret has been <span className=' text-red-600 uppercase text-3xl font-bold'> destroyed !</span></p>}
     </div>
   )
 }
